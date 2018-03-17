@@ -1,14 +1,19 @@
 package com.javirock.coolservice;
 
+import android.Manifest;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.IBinder;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
 import android.widget.Toast;
@@ -16,7 +21,8 @@ import android.widget.Toast;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 
-public class CoolService extends Service {
+public class CoolService extends Service implements ActivityCompat.OnRequestPermissionsResultCallback {
+    private static final int PERM_REQUEST_LOCATION = 1;
     public CoolService() {
     }
 
@@ -37,6 +43,12 @@ public class CoolService extends Service {
         Logger.i("onStartCommand");
         if (intent.getAction().equals(Constants.ACTION.STARTFOREGROUND_ACTION)) {
             Logger.i("Received Start Foreground Intent ");
+
+
+            PermissionHelper.requestPermissions(this, new String[]{Manifest.permission.BLUETOOTH_ADMIN},
+                    PERM_REQUEST_LOCATION, "Location", "Needed", android.R.drawable.ic_secure);
+
+
             showNotification();
             Toast.makeText(this, "Service Started!", Toast.LENGTH_SHORT).show();
 
@@ -84,5 +96,25 @@ public class CoolService extends Service {
         super.onDestroy();
         Logger.i("inDestroy");
         Toast.makeText(this, "Service Detroyed!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        boolean isGranted = false;
+        for (int i = 0; i < grantResults.length; i++) {
+            if (permissions[i].equals(Manifest.permission.ACCESS_COARSE_LOCATION) && (grantResults[i] == PackageManager.PERMISSION_GRANTED)) {
+                isGranted = true;
+            }else if(permissions[i].equals(Manifest.permission.BLUETOOTH) && (grantResults[i] == PackageManager.PERMISSION_GRANTED)){
+                isGranted = true;
+            }
+        }
+        if (isGranted) {
+            Logger.i("PERMISSIONS GRANTED");
+            BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+            adapter.enable();
+        }
+        else
+            Logger.i("ACCESS_FINE_LOCATION permission not granted. Location notifications will not be available.");
+
     }
 }
