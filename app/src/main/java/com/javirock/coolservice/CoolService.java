@@ -29,6 +29,7 @@ public class CoolService extends Service {
     public void onCreate() {
         super.onCreate();
         Logger.addLogAdapter(new AndroidLogAdapter());
+        Logger.i("onCreate");
 
     }
     @Override
@@ -49,7 +50,6 @@ public class CoolService extends Service {
     }
     private void showNotification() {
 
-
         Intent notificationIntent = new Intent(this, MainActivity.class);
         notificationIntent.setAction(Constants.ACTION.MAIN_ACTION);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
@@ -57,9 +57,8 @@ public class CoolService extends Service {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
                 notificationIntent, 0);
 
-        // And now, building and attaching the Close button.
         RemoteViews notificationView = new RemoteViews(this.getPackageName(), R.layout.notification);
-
+        // And now, building and attaching the Close button.
         Intent buttonCloseIntent = new Intent(this, NotificationCloseButtonHandler.class);
         buttonCloseIntent.putExtra("action", "close");
 
