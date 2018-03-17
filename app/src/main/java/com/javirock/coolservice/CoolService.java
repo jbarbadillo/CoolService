@@ -83,9 +83,9 @@ public class CoolService extends Service {
                 R.drawable.guitar);
 
         Notification notification = new NotificationCompat.Builder(this)
-                .setContentTitle("TutorialsFace Music Player")
-                .setTicker("TutorialsFace Music Player")
-                .setContentText("My song")
+                .setContentTitle("AndroidGuitar")
+                .setTicker("AndroidGuitar")
+                .setContentText("Ready to play!")
                 .setSmallIcon(R.drawable.guitar)
                 .setLargeIcon(Bitmap.createScaledBitmap(icon, 128, 128, false))
                 .setContentIntent(pendingIntent)
