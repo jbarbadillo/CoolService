@@ -50,16 +50,16 @@ public class CoolService extends Service {
     }
     private void showNotification() {
         Intent notificationIntent = new Intent(this, MainActivity.class);
-        notificationIntent.setAction(Constants.ACTION.MAIN_ACTION);
+        notificationIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
+        PendingIntent pendingIntent = PendingIntent.getService(this, 0,
                 notificationIntent, 0);
 
         // And now, building and attaching the Close button.
         Intent buttonCloseIntent = new Intent(this, CoolService.class);
         buttonCloseIntent.setAction(Constants.ACTION.STOPFOREGROUND_ACTION);
-        PendingIntent buttonClosePendingIntent = pendingIntent.getBroadcast(this, 0, buttonCloseIntent, 0);
+        PendingIntent buttonClosePendingIntent = pendingIntent.getService(this, 0, buttonCloseIntent, 0);
 
         Bitmap icon = BitmapFactory.decodeResource(getResources(),
                 R.drawable.guitar);
@@ -71,8 +71,9 @@ public class CoolService extends Service {
                 .setSmallIcon(R.drawable.guitar)
                 .setLargeIcon(Bitmap.createScaledBitmap(icon, 128, 128, false))
                 .setContentIntent(pendingIntent)
+                .setOngoing(true)
                 .addAction(android.R.drawable.ic_menu_close_clear_cancel,"close", buttonClosePendingIntent)
-                .setOngoing(true).build();
+                .build();
 
         startForeground(Constants.NOTIFICATION_ID.FOREGROUND_SERVICE,
                 notification);
