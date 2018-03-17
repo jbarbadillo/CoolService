@@ -80,13 +80,13 @@ public class CoolService extends Service {
                 nextIntent, 0);
 
         Bitmap icon = BitmapFactory.decodeResource(getResources(),
-                R.drawable.ic_launcher_foreground);
+                R.drawable.guitar);
 
         Notification notification = new NotificationCompat.Builder(this)
                 .setContentTitle("TutorialsFace Music Player")
                 .setTicker("TutorialsFace Music Player")
                 .setContentText("My song")
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setSmallIcon(R.drawable.guitar)
                 .setLargeIcon(Bitmap.createScaledBitmap(icon, 128, 128, false))
                 .setContentIntent(pendingIntent)
                 .setOngoing(true).build();
