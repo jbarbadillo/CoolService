@@ -89,13 +89,13 @@ public class CoolService extends Service {
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setLargeIcon(Bitmap.createScaledBitmap(icon, 128, 128, false))
                 .setContentIntent(pendingIntent)
-                .setOngoing(true)
-                .addAction(android.R.drawable.ic_media_previous, "Previous",
-                        ppreviousIntent)
-                .addAction(android.R.drawable.ic_media_play, "Play",
-                        pplayIntent)
-                .addAction(android.R.drawable.ic_media_next, "Next",
-                        pnextIntent).build();
+                .setOngoing(true).build();
+                //.addAction(android.R.drawable.ic_media_previous, "Previous",
+                 //       ppreviousIntent)
+                //.addAction(android.R.drawable.ic_media_play, "Play",
+                 //       pplayIntent)
+                //.addAction(android.R.drawable.ic_media_next, "Next",
+                 //       pnextIntent).build();
         startForeground(Constants.NOTIFICATION_ID.FOREGROUND_SERVICE,
                 notification);
 
