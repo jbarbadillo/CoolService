@@ -45,8 +45,8 @@ public class CoolService extends Service implements ActivityCompat.OnRequestPerm
             Logger.i("Received Start Foreground Intent ");
 
 
-            PermissionHelper.requestPermissions(this, new String[]{Manifest.permission.BLUETOOTH_ADMIN},
-                    PERM_REQUEST_LOCATION, "Location", "Needed", android.R.drawable.ic_secure);
+            /*PermissionHelper.requestPermissions(this, new String[]{Manifest.permission.BLUETOOTH_ADMIN},
+                    PERM_REQUEST_LOCATION, "Location", "Needed", android.R.drawable.ic_secure);*/
 
 
             showNotification();
