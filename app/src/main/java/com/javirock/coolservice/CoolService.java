@@ -33,7 +33,7 @@ public class CoolService extends Service {
     }
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
+        Logger.i("onStartCommand");
         if (intent.getAction().equals(Constants.ACTION.STARTFOREGROUND_ACTION)) {
             Logger.i("Received Start Foreground Intent ");
             showNotification();
@@ -75,7 +75,7 @@ public class CoolService extends Service {
                 .setContentText("Ready to play!")
                 .setSmallIcon(R.drawable.guitar)
                 .setLargeIcon(Bitmap.createScaledBitmap(icon, 128, 128, false))
-                .setContentIntent(notificationView)
+                .setContent(notificationView)
                 .setOngoing(true).build();
 
         startForeground(Constants.NOTIFICATION_ID.FOREGROUND_SERVICE,
