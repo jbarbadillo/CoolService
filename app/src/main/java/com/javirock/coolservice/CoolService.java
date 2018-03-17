@@ -14,8 +14,8 @@ public class CoolService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
-        throw new UnsupportedOperationException("Not yet implemented");
+        // Used only in case if services are bound (Bound Services).
+        return null;
     }
     @Override
     public void onCreate() {
@@ -50,5 +50,11 @@ public class CoolService extends Service {
             stopSelf();
         }
         return START_STICKY;
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Logger.i("inDestroy");
+        Toast.makeText(this, "Service Detroyed!", Toast.LENGTH_SHORT).show();
     }
 }
