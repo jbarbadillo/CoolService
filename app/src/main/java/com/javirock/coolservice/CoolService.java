@@ -48,14 +48,7 @@ public class CoolService extends Service {
         return START_STICKY;
     }
     private void showNotification() {
-        // And now, building and attaching the Close button.
-        /*RemoteViews notificationView = new RemoteViews(this.getPackageName(), R.layout.notification);
 
-        Intent buttonCloseIntent = new Intent(this, NotificationCloseButtonHandler.class);
-        buttonCloseIntent.putExtra("action", "close");
-
-        PendingIntent buttonClosePendingIntent = pendingIntent.getBroadcast(this, 0, buttonCloseIntent, 0);
-        notificationView.setOnClickPendingIntent(R.id.notification_button_close, buttonClosePendingIntent);*/
 
         Intent notificationIntent = new Intent(this, MainActivity.class);
         notificationIntent.setAction(Constants.ACTION.MAIN_ACTION);
@@ -64,6 +57,12 @@ public class CoolService extends Service {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
                 notificationIntent, 0);
 
+        // And now, building and attaching the Close button.
+        RemoteViews notificationView = new RemoteViews(this.getPackageName(), R.layout.notification);
+        Intent buttonCloseIntent = new Intent(this, NotificationCloseButtonHandler.class);
+        buttonCloseIntent.putExtra("action", "close");
+        PendingIntent buttonClosePendingIntent = pendingIntent.getBroadcast(this, 0, buttonCloseIntent, 0);
+        notificationView.setOnClickPendingIntent(R.id.notification_button_close, buttonClosePendingIntent);
 
         Bitmap icon = BitmapFactory.decodeResource(getResources(),
                 R.drawable.guitar);
