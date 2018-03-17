@@ -30,24 +30,12 @@ public class CoolService extends Service {
     }
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
         if (intent.getAction().equals(Constants.ACTION.STARTFOREGROUND_ACTION)) {
             Logger.i("Received Start Foreground Intent ");
             showNotification();
             Toast.makeText(this, "Service Started!", Toast.LENGTH_SHORT).show();
 
-        } else if (intent.getAction().equals(Constants.ACTION.PREV_ACTION)) {
-            Logger.i("Clicked Previous");
-
-            Toast.makeText(this, "Clicked Previous!", Toast.LENGTH_SHORT)
-                    .show();
-        } else if (intent.getAction().equals(Constants.ACTION.PLAY_ACTION)) {
-            Logger.i("Clicked Play");
-
-            Toast.makeText(this, "Clicked Play!", Toast.LENGTH_SHORT).show();
-        } else if (intent.getAction().equals(Constants.ACTION.NEXT_ACTION)) {
-            Logger.i(" Clicked Next");
-
-            Toast.makeText(this, "Clicked Next!", Toast.LENGTH_SHORT).show();
         } else if (intent.getAction().equals(
                 Constants.ACTION.STOPFOREGROUND_ACTION)) {
             Logger.i("Received Stop Foreground Intent ");
@@ -57,6 +45,15 @@ public class CoolService extends Service {
         return START_STICKY;
     }
     private void showNotification() {
+        // And now, building and attaching the Close button.
+        RemoteViews notificationView = new RemoteViews(this.getPackageName(),R.layout.notification);
+
+        Intent buttonCloseIntent = new Intent(this, NotificationCloseButtonHandler.class);
+        buttonCloseIntent.putExtra("action", "close");
+
+        PendingIntent buttonClosePendingIntent = pendingIntent.getBroadcast(this, 0, buttonCloseIntent, 0);
+        notificationView.setOnClickPendingIntent(R.id.notification_button_close, buttonClosePendingIntent);
+        
         Intent notificationIntent = new Intent(this, MainActivity.class);
         notificationIntent.setAction(Constants.ACTION.MAIN_ACTION);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
@@ -64,20 +61,8 @@ public class CoolService extends Service {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
                 notificationIntent, 0);
 
-        Intent previousIntent = new Intent(this, CoolService.class);
-        previousIntent.setAction(Constants.ACTION.PREV_ACTION);
-        PendingIntent ppreviousIntent = PendingIntent.getService(this, 0,
-                previousIntent, 0);
 
-        Intent playIntent = new Intent(this, CoolService.class);
-        playIntent.setAction(Constants.ACTION.PLAY_ACTION);
-        PendingIntent pplayIntent = PendingIntent.getService(this, 0,
-                playIntent, 0);
 
-        Intent nextIntent = new Intent(this, CoolService.class);
-        nextIntent.setAction(Constants.ACTION.NEXT_ACTION);
-        PendingIntent pnextIntent = PendingIntent.getService(this, 0,
-                nextIntent, 0);
 
         Bitmap icon = BitmapFactory.decodeResource(getResources(),
                 R.drawable.guitar);
