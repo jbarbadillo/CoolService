@@ -59,8 +59,10 @@ public class CoolService extends Service {
 
         // And now, building and attaching the Close button.
         RemoteViews notificationView = new RemoteViews(this.getPackageName(), R.layout.notification);
+
         Intent buttonCloseIntent = new Intent(this, NotificationCloseButtonHandler.class);
         buttonCloseIntent.putExtra("action", "close");
+
         PendingIntent buttonClosePendingIntent = pendingIntent.getBroadcast(this, 0, buttonCloseIntent, 0);
         notificationView.setOnClickPendingIntent(R.id.notification_button_close, buttonClosePendingIntent);
 
@@ -73,14 +75,9 @@ public class CoolService extends Service {
                 .setContentText("Ready to play!")
                 .setSmallIcon(R.drawable.guitar)
                 .setLargeIcon(Bitmap.createScaledBitmap(icon, 128, 128, false))
-                .setContentIntent(pendingIntent)
+                .setContentIntent(notificationView)
                 .setOngoing(true).build();
-                //.addAction(android.R.drawable.ic_media_previous, "Previous",
-                 //       ppreviousIntent)
-                //.addAction(android.R.drawable.ic_media_play, "Play",
-                 //       pplayIntent)
-                //.addAction(android.R.drawable.ic_media_next, "Next",
-                 //       pnextIntent).build();
+
         startForeground(Constants.NOTIFICATION_ID.FOREGROUND_SERVICE,
                 notification);
 
