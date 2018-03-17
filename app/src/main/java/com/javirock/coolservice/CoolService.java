@@ -49,7 +49,6 @@ public class CoolService extends Service {
         return START_STICKY;
     }
     private void showNotification() {
-
         Intent notificationIntent = new Intent(this, MainActivity.class);
         notificationIntent.setAction(Constants.ACTION.MAIN_ACTION);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
@@ -57,13 +56,10 @@ public class CoolService extends Service {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
                 notificationIntent, 0);
 
-        RemoteViews notificationView = new RemoteViews(this.getPackageName(), R.layout.notification);
         // And now, building and attaching the Close button.
-        Intent buttonCloseIntent = new Intent(this, NotificationCloseButtonHandler.class);
-        buttonCloseIntent.putExtra("action", "close");
-
+        Intent buttonCloseIntent = new Intent(this, CoolService.class);
+        buttonCloseIntent.setAction(Constants.ACTION.STOPFOREGROUND_ACTION);
         PendingIntent buttonClosePendingIntent = pendingIntent.getBroadcast(this, 0, buttonCloseIntent, 0);
-        notificationView.setOnClickPendingIntent(R.id.notification_button_close, buttonClosePendingIntent);
 
         Bitmap icon = BitmapFactory.decodeResource(getResources(),
                 R.drawable.guitar);
@@ -74,7 +70,8 @@ public class CoolService extends Service {
                 .setContentText("Ready to play!")
                 .setSmallIcon(R.drawable.guitar)
                 .setLargeIcon(Bitmap.createScaledBitmap(icon, 128, 128, false))
-                .setContent(notificationView)
+                .setContentIntent(pendingIntent)
+                .addAction(android.R.drawable.ic_menu_close_clear_cancel,"close", buttonClosePendingIntent)
                 .setOngoing(true).build();
 
         startForeground(Constants.NOTIFICATION_ID.FOREGROUND_SERVICE,
@@ -86,15 +83,5 @@ public class CoolService extends Service {
         super.onDestroy();
         Logger.i("inDestroy");
         Toast.makeText(this, "Service Detroyed!", Toast.LENGTH_SHORT).show();
-    }
-    /**
-     * Called when user clicks the "close" button on the on-going system Notification.
-     */
-    public static class NotificationCloseButtonHandler extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Toast.makeText(context,"Close Clicked",Toast.LENGTH_SHORT).show();
-
-        }
     }
 }
