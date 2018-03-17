@@ -3,11 +3,14 @@ package com.javirock.coolservice;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
+import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.orhanobut.logger.AndroidLogAdapter;
@@ -46,22 +49,20 @@ public class CoolService extends Service {
     }
     private void showNotification() {
         // And now, building and attaching the Close button.
-        RemoteViews notificationView = new RemoteViews(this.getPackageName(),R.layout.notification);
+        /*RemoteViews notificationView = new RemoteViews(this.getPackageName(), R.layout.notification);
 
         Intent buttonCloseIntent = new Intent(this, NotificationCloseButtonHandler.class);
         buttonCloseIntent.putExtra("action", "close");
 
         PendingIntent buttonClosePendingIntent = pendingIntent.getBroadcast(this, 0, buttonCloseIntent, 0);
-        notificationView.setOnClickPendingIntent(R.id.notification_button_close, buttonClosePendingIntent);
-        
+        notificationView.setOnClickPendingIntent(R.id.notification_button_close, buttonClosePendingIntent);*/
+
         Intent notificationIntent = new Intent(this, MainActivity.class);
         notificationIntent.setAction(Constants.ACTION.MAIN_ACTION);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
                 notificationIntent, 0);
-
-
 
 
         Bitmap icon = BitmapFactory.decodeResource(getResources(),
@@ -90,5 +91,15 @@ public class CoolService extends Service {
         super.onDestroy();
         Logger.i("inDestroy");
         Toast.makeText(this, "Service Detroyed!", Toast.LENGTH_SHORT).show();
+    }
+    /**
+     * Called when user clicks the "close" button on the on-going system Notification.
+     */
+    public static class NotificationCloseButtonHandler extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Toast.makeText(context,"Close Clicked",Toast.LENGTH_SHORT).show();
+
+        }
     }
 }
