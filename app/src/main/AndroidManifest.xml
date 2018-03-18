@@ -18,6 +18,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".PermissionActivity"></activity>
         <service
             android:name=".CoolService"
             android:enabled="true"
