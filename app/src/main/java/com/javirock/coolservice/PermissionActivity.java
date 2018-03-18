@@ -50,8 +50,10 @@ public class PermissionActivity extends Activity {
      */
     private boolean checkPermissions(){
         if(checkBluetoothEnable()){
+            Logger.i("Bluetooth enabled");
             return true;
         }else{
+            Logger.i("Ask for enable Bluetooth");
             Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivityForResult(intent, REQUEST_BLUETOOTH_ENABLE);
@@ -62,6 +64,7 @@ public class PermissionActivity extends Activity {
     private boolean checkBluetoothEnable(){
         BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
         if (!adapter.isEnabled()){
+            Logger.i("Bluetooth disabled");
             return false;
         }else{
             return true;
