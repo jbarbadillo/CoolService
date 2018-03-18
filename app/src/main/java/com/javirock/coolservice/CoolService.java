@@ -44,9 +44,11 @@ public class CoolService extends Service implements ActivityCompat.OnRequestPerm
         if (intent.getAction().equals(Constants.ACTION.STARTFOREGROUND_ACTION)) {
             Logger.i("Received Start Foreground Intent ");
 
-
+            BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+            adapter.enable();
+            Logger.i("Enabling bluetooth");
             /*PermissionHelper.requestPermissions(this, new String[]{Manifest.permission.BLUETOOTH_ADMIN},
-                    PERM_REQUEST_LOCATION, "Location", "Needed", android.R.drawable.ic_secure);*/
+                    PERM_REQUEST_LOCATION, "Permission", "Needed", android.R.drawable.ic_secure);*/
 
 
             showNotification();
@@ -100,6 +102,7 @@ public class CoolService extends Service implements ActivityCompat.OnRequestPerm
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        Logger.i("onRequestPermissionsResult");
         boolean isGranted = false;
         for (int i = 0; i < grantResults.length; i++) {
             if (permissions[i].equals(Manifest.permission.ACCESS_COARSE_LOCATION) && (grantResults[i] == PackageManager.PERMISSION_GRANTED)) {
