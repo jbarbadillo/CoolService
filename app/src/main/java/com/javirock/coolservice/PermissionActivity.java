@@ -35,6 +35,7 @@ public class PermissionActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         if (requestCode == REQUEST_BLUETOOTH_ENABLE) {
             if(resultCode == Activity.RESULT_OK){
+                Logger.i("REQUEST_BLUETOOTH_ENABLE OK!");
                 launchCheckPermissions();
             }
             if (resultCode == Activity.RESULT_CANCELED) {
