@@ -28,7 +28,7 @@ import com.google.android.gms.location.LocationSettingsResult;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 
-public class CoolService extends Service implements ActivityCompat.OnRequestPermissionsResultCallback {
+public class CoolService extends Service {
     private static final int PERM_REQUEST_LOCATION = 1;
     public CoolService() {
     }
@@ -109,26 +109,5 @@ public class CoolService extends Service implements ActivityCompat.OnRequestPerm
         super.onDestroy();
         Logger.i("inDestroy");
         Toast.makeText(this, "Service Detroyed!", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        Logger.i("onRequestPermissionsResult");
-        boolean isGranted = false;
-        for (int i = 0; i < grantResults.length; i++) {
-            if (permissions[i].equals(Manifest.permission.ACCESS_COARSE_LOCATION) && (grantResults[i] == PackageManager.PERMISSION_GRANTED)) {
-                isGranted = true;
-            }else if(permissions[i].equals(Manifest.permission.BLUETOOTH) && (grantResults[i] == PackageManager.PERMISSION_GRANTED)){
-                isGranted = true;
-            }
-        }
-        if (isGranted) {
-            Logger.i("PERMISSIONS GRANTED");
-            BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-            adapter.enable();
-        }
-        else
-            Logger.i("ACCESS_FINE_LOCATION permission not granted. Location notifications will not be available.");
-
     }
 }
