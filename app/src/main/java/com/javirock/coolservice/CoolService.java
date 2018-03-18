@@ -12,19 +12,15 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.LocationManager;
+import android.os.Bundle;
 import android.os.IBinder;
+import android.os.ResultReceiver;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResult;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 
@@ -109,5 +105,33 @@ public class CoolService extends Service {
         super.onDestroy();
         Logger.i("inDestroy");
         Toast.makeText(this, "Service Detroyed!", Toast.LENGTH_SHORT).show();
+    }
+
+
+    private void startPermissionActivity() {
+        Intent intent = new Intent(this, PermissionActivity.class);
+
+        intent.putExtra(KEY_RECEIVER, new MessageReceiver());
+        startActivity(intent);
+    }
+    public static final int RESULT_OK = -1;
+    public static final String KEY_MESSAGE = "KEY_MESSAGE";
+    public static final String KEY_RECEIVER = "KEY_RECEIVER";
+
+    class MessageReceiver extends ResultReceiver {
+
+        public MessageReceiver() {
+            super(null);
+        }
+        @Override
+        protected void onReceiveResult(int resultCode, Bundle resultData) {
+            if (resultCode != RESULT_OK) {
+                return;
+            }
+            String message = resultData.getString(KEY_MESSAGE);
+
+            // Now you can do something with it.
+        }
+
     }
 }
