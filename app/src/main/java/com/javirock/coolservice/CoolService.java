@@ -44,8 +44,12 @@ public class CoolService extends Service implements ActivityCompat.OnRequestPerm
         if (intent.getAction().equals(Constants.ACTION.STARTFOREGROUND_ACTION)) {
             Logger.i("Received Start Foreground Intent ");
 
-            BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-            adapter.enable();
+            //BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+            //adapter.enable();
+            Intent btIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            btIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            this.startActivity(btIntent);
+
             Logger.i("Enabling bluetooth");
             /*PermissionHelper.requestPermissions(this, new String[]{Manifest.permission.BLUETOOTH_ADMIN},
                     PERM_REQUEST_LOCATION, "Permission", "Needed", android.R.drawable.ic_secure);*/
