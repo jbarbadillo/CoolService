@@ -34,11 +34,11 @@ public class PermissionActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         if (requestCode == REQUEST_BLUETOOTH_ENABLE) {
-            if(resultCode == Activity.RESULT_OK){
+            if(resultCode == RESULT_OK){
                 Logger.i("REQUEST_BLUETOOTH_ENABLE OK!");
                 launchCheckPermissions();
             }
-            if (resultCode == Activity.RESULT_CANCELED) {
+            if (resultCode == RESULT_CANCELED) {
                 Logger.i("REQUEST_BLUETOOTH_ENABLE CANCELED!");
                 launchCheckPermissions();
             }
@@ -79,6 +79,7 @@ public class PermissionActivity extends Activity {
         resultData.putString(CoolService.KEY_MESSAGE, "Permissions OK");
         receiver.send(CoolService.RESULT_OK, resultData);
 
+        Logger.i("Finish permission activty");
         super.finish();
     }
 

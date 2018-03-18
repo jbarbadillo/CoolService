@@ -47,16 +47,7 @@ public class CoolService extends Service {
         if (intent.getAction().equals(Constants.ACTION.STARTFOREGROUND_ACTION)) {
             Logger.i("Received Start Foreground Intent ");
 
-            //BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-            //adapter.enable();
-           /* Intent btIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            btIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            this.startActivity(btIntent);*/
-
             startPermissionActivity();
-
-            Logger.i("Enabling bluetooth");
-
 
             showNotification();
             Toast.makeText(this, "Service Started!", Toast.LENGTH_SHORT).show();
@@ -132,7 +123,6 @@ public class CoolService extends Service {
             }
             String message = resultData.getString(KEY_MESSAGE);
             Logger.i(message);
-            // Now you can do something with it.
         }
 
     }
