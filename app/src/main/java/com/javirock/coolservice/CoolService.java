@@ -131,7 +131,7 @@ public class CoolService extends Service {
                 return;
             }
             String message = resultData.getString(KEY_MESSAGE);
-
+            Logger.i(message);
             // Now you can do something with it.
         }
 
