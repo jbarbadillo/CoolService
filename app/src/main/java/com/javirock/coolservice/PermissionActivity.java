@@ -39,6 +39,7 @@ public class PermissionActivity extends Activity {
                 launchCheckPermissions();
             }
             if (resultCode == Activity.RESULT_CANCELED) {
+                Logger.i("REQUEST_BLUETOOTH_ENABLE CANCELED!");
                 launchCheckPermissions();
             }
         }
@@ -54,8 +55,9 @@ public class PermissionActivity extends Activity {
             Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivityForResult(intent, REQUEST_BLUETOOTH_ENABLE);
+            return false;
         }
-        return false;
+
     }
     private boolean checkBluetoothEnable(){
         BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
