@@ -112,6 +112,7 @@ public class CoolService extends Service {
         Intent intent = new Intent(this, PermissionActivity.class);
 
         intent.putExtra(KEY_RECEIVER, new MessageReceiver());
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
     public static final int RESULT_OK = -1;
