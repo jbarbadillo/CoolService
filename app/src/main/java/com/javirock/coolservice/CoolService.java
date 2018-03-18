@@ -49,11 +49,11 @@ public class CoolService extends Service {
 
             //BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
             //adapter.enable();
-            Intent btIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+           /* Intent btIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             btIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            this.startActivity(btIntent);
+            this.startActivity(btIntent);*/
 
-
+            startPermissionActivity();
 
             Logger.i("Enabling bluetooth");
 
@@ -125,6 +125,7 @@ public class CoolService extends Service {
         }
         @Override
         protected void onReceiveResult(int resultCode, Bundle resultData) {
+            Logger.i("onReceiveResult");
             if (resultCode != RESULT_OK) {
                 return;
             }
