@@ -6,7 +6,6 @@ package com.javirock.coolservice;
 
 public class Constants {
     public interface ACTION {
-        public static String INIT_ACTION = "com.javirock.coolservice.action.init";
         public static String MAIN_ACTION = "com.javirock.coolservice.action.main";
         public static String STARTFOREGROUND_ACTION = "com.javirock.coolservice.action.startforeground";
         public static String STOPFOREGROUND_ACTION = "com.javirock.coolservice.action.stopforeground";
